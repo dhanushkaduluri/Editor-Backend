@@ -26,34 +26,32 @@ export const getSubmissions = async (req, res) => {
     }
 };
 
-export const checkOutput=async (req,res)=>{
-    const {token}=req.body;
+export const checkOutput = async (req, res) => {
+    const { token } = req.body;
     const option = {
         method: 'GET',
         url: `https://judge0-ce.p.rapidapi.com/submissions/${token}`,
         params: {
-          base64_encoded: 'true',
-          fields: '*'
+            base64_encoded: 'true',
+            fields: '*'
         },
         headers: {
-          'X-RapidAPI-Key': '3e453a9771msh71ed0880a88bd5fp1d3ee6jsn620e339e78e2',
-          'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
+            'X-RapidAPI-Key': '3e453a9771msh71ed0880a88bd5fp1d3ee6jsn620e339e78e2',
+            'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
         }
-      };
-      
-      try {
-            let response='';
-            let ans='';
-            setTimeout(async () => {
-                response = await axios.request(option);
-                ans=atob(response.data.stdout);
-            }, 5000);
-          console.log("output : ",ans);
-          res.json(ans);
-      } catch (error) {
-          console.error(error);
-      }
+    };
+
+    try {
+        const response = await axios.request(option);
+        const ans = atob(response.data.stdout);
+        console.log("output : ", ans);
+        res.json(ans);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to check output' });
+    }
 }
+
 
 export const executeCode = async (req, res) => {
     const { code, language } = req.body;
