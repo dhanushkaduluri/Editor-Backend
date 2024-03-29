@@ -6,7 +6,7 @@ import ConnectToDB from './config/ConnectToDB.js';
 import { submit, getSubmissions, executeCode, checkOutput } from './Controllers/controllers.js';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
 
 // Middleware
